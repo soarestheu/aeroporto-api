@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('cd_usuario');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+        Schema::create('bagagens', function (Blueprint $table) {
+            $table->bigIncrements('cd_bagagem');
+            $table->string('numero_identificacao');
+            $table->unsignedBigInteger('cd_passagem');
+            $table->foreign('cd_passagem')->references('cd_passagem')->on('passagens')->constrained('passagens');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('bagagens');
     }
 };
