@@ -9,7 +9,10 @@ class Cidade extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'unidade_federativa'];
+    protected $fillable = [
+        'nome', 
+        'unidade_federativa'
+    ];
 
     public function aeroportos()
     {
