@@ -10,6 +10,13 @@ class Voo extends Model
 {
     use HasFactory;
 
+        /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'cd_voo';
+
     protected $fillable = [
         'numero', 
         'cd_aeroporto_origem',

@@ -99,7 +99,21 @@ class VooController extends Controller
      */
     public function update(UpdateVooRequest $request, Voo $voo)
     {
-        //
+        $dadosVoo = $request->all();
+
+        DB::beginTransaction();
+        try {
+
+            $voo->update($dadosVoo);
+            DB::commit();
+            return response()->json(["Voo Atualizado!"],200);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                "title" => "Erro inesperado",
+                "message" => $th->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**

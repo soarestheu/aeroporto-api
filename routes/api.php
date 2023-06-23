@@ -31,5 +31,6 @@ Route::get('/aeroporto', [AeroportoController::class, 'index']);
 
 Route::post('/voo', [VooController::class, "store"]);
 Route::get('/voo', [VooController::class, "index"]);
+Route::put('/voo/{voo}', [VooController::class, "update"]);
 
 // Route::resource('aeroporto', AeroportoController::class);
