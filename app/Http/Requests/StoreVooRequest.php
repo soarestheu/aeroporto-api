@@ -2,16 +2,23 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\FailedValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreVooRequest extends FormRequest
 {
+    use FailedValidationTrait;
+
+    public function __construct()
+    {
+        // dd(Request()->input('cd_aeroporto_origem'));
+    }
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +29,10 @@ class StoreVooRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            // "numero" => "required|max:191",
+            // "numero" => "required|max:191",
+            // "numero" => "required|max:191",
+            // "numero" => "required|max:191",
         ];
     }
 }

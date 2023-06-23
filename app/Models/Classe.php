@@ -18,6 +18,6 @@ class Classe extends Model
 
     public function voo()
     {
-        return $this->belongsTo(Voo::class);
+        return $this->belongsTo(Voo::class, 'cd_voo', 'cd_voo');
     }
 }

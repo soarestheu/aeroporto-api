@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AeroportoController;
+use App\Http\Controllers\VooController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +28,7 @@ Route::get("", function() {
 
 Route::post('/aeroporto', [AeroportoController::class, 'store']);
 Route::get('/aeroporto', [AeroportoController::class, 'index']);
+
+Route::post('/voo', [VooController::class, "store"]);
 
 // Route::resource('aeroporto', AeroportoController::class);

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreVooRequest;
 use App\Http\Requests\UpdateVooRequest;
 use App\Models\Voo;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class VooController extends Controller
 {
@@ -29,7 +31,22 @@ class VooController extends Controller
      */
     public function store(StoreVooRequest $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $dadosVoo = $request->only([
+                'numero', 'cd_aeroporto_origem', 'cd_aeroporto_destino', 'data_partida', 'hora_partida'
+            ]);
+
+            $voo = Voo::create($dadosVoo);
+            DB::commit();
+            return response()->json(["Voo Cadastrado!"],200);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                "title" => "Erro inesperado",
+                "message" => $th->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
