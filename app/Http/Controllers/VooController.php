@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreVooRequest;
 use App\Http\Requests\UpdateVooRequest;
 use App\Models\Voo;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -13,9 +14,37 @@ class VooController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Voo::with(['aeroportoOrigem', 'aeroportoDestino', 'classes']);
+
+        if($request->filled('numero')) {
+            $query->comNumero($request->numero);
+        }
+
+        if($request->filled('cd_aeroporto_origem')) {
+            $query->comAeroportoOrigem($request->cd_aeroporto_origem);
+        }
+
+        if($request->filled('cd_aeroporto_destino')) {
+            $query->comAeroportoDestino($request->cd_aeroporto_destino);
+        }
+
+        if($request->filled('data_partida')) {
+            $query->comDataPartida($request->data_partida);
+        }
+
+        if($request->filled('hora_partida')) {
+            $query->comHoraPartida($request->hora_partida);
+        }
+
+        if ($request->filled('limit')) {
+            $data = $request->limit == '-1' ? $query->get() : $query->paginate($request->limit);
+        } else {
+            $data = $query->paginate(config('app.pageLimit'));
+        }
+
+        return response()->json($data);
     }
 
     /**

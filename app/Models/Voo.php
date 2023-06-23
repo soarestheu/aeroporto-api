@@ -37,4 +37,30 @@ class Voo extends Model
     {
         return $this->hasMany(Classe::class, 'cd_voo', 'cd_voo');
     }
+
+    public function scopeComNumero($query, $filtro)
+    {
+        return $query->where("numero", $filtro);
+    }
+
+    public function scopeComAeroportoOrigem($query, $filtro)
+    {
+        return $query->where("numero", $filtro);
+    }
+
+    public function scopeComAeroportoDestino($query, $filtro)
+    {
+        return $query->where("numero", $filtro);
+    }
+
+    public function scopeComDataPartida($query, $filtro)
+    {
+        return $query->where("numero", $filtro);
+    }
+
+    public function scopeComHoraPartida($query, $filtro)
+    {
+        return $query->where("numero", $filtro);
+    }
+
 }
