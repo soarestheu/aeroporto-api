@@ -17,6 +17,21 @@ class Aeroporto extends Model
 
     public function cidade()
     {
-        return $this->belongsTo(Cidade::class);
+        return $this->belongsTo(Cidade::class, 'cd_cidade', 'cd_cidade');
+    }
+
+    public function scopeComNome($query, $filtro)
+    {
+        return $query->where("nome", $filtro);
+    }
+
+    public function scopeComCidade($query, $filtro)
+    {
+        return $query->where("cd_cidade", $filtro);
+    }
+
+    public function scopeComCodigoIata($query, $filtro)
+    {
+        return $query->where("codigo_iata", $filtro);
     }
 }

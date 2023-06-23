@@ -16,6 +16,6 @@ class Cidade extends Model
 
     public function aeroportos()
     {
-        return $this->hasMany(Aeroporto::class);
+        return $this->hasMany(Aeroporto::class, 'cd_cidade', 'cd_cidade');
     }
 }
