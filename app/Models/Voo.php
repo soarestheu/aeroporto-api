@@ -5,24 +5,27 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Voo extends Model
 {
     use HasFactory;
-
+    use SoftDeletes;
         /**
      * The primary key associated with the table.
      *
      * @var string
      */
     protected $primaryKey = 'cd_voo';
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'numero', 
         'cd_aeroporto_origem',
         'cd_aeroporto_destino', 
         'data_partida', 
-        'hora_partida'
+        'hora_partida',
+        'cancelado'
     ];
 
     public function getDataPartidaAttribute($value)

@@ -16,7 +16,8 @@ class VooController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Voo::with(['aeroportoOrigem', 'aeroportoDestino', 'classes']);
+        $query = Voo::with(['aeroportoOrigem', 'aeroportoDestino', 'classes'])
+                    ->where('cancelado', 0);
 
         if($request->filled('numero')) {
             $query->comNumero($request->numero);
@@ -105,6 +106,7 @@ class VooController extends Controller
         try {
 
             $voo->update($dadosVoo);
+
             DB::commit();
             return response()->json(["Voo Atualizado!"],200);
         } catch (\Throwable $th) {
@@ -116,6 +118,32 @@ class VooController extends Controller
         }
     }
 
+    public function cancelarVoo(Request $request, Voo $voo)
+    {
+        DB::beginTransaction();
+        try {
+
+            $msg = "Voo disponível!"; 
+
+            if($request->cancelar === "true") {
+                $msg ="Voo cancelado!";
+            }
+
+            $voo->update([
+                'cancelado' => $request->cancelar === "true" ? 1 : 0
+            ]);
+
+            DB::commit();
+            return response()->json([$msg],200);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json([
+                "title" => "Erro inesperado",
+                "message" => $th->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+    }
     /**
      * Remove the specified resource from storage.
      */
