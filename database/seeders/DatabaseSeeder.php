@@ -13,7 +13,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            CidadeSeeder::class
+            CidadeSeeder::class,
+            TipoClasseSeeder::class,
+            ClasseSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 

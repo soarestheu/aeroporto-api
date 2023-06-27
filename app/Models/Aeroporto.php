@@ -9,6 +9,8 @@ class Aeroporto extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'cd_aeroporto';
+
     protected $fillable = [
         'nome',
         'codigo_iata',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreVooRequest;
 use App\Http\Requests\UpdateVooRequest;
 use App\Models\Voo;
+use App\Models\VooClasse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,13 @@ class VooController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Voo::with(['aeroportoOrigem', 'aeroportoDestino', 'classes'])
+        $query = Voo::with(['aeroportoOrigem', 'aeroportoDestino', 
+                        'vooClasse' => function ($query) {
+                            $query->with(['classe' => function($c) {
+                                $c->with('tipoClasse');
+                            }]);
+                        }
+                    ])
                     ->where('cancelado', 0);
 
         if($request->filled('numero')) {
@@ -68,6 +75,13 @@ class VooController extends Controller
             ]);
 
             $voo = Voo::create($dadosVoo);
+
+            foreach($request->classe as $classe ) {
+                VooClasse::create([
+                    "cd_voo" => $voo->cd_voo,
+                    "cd_classe" => $classe
+                ]);
+            }
             DB::commit();
             return response()->json(["Voo Cadastrado!"],200);
         } catch (\Throwable $th) {

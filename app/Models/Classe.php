@@ -10,14 +10,18 @@ class Classe extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tipo',
+        'cd_tipo_classe',
         'quantidade_assentos',
         'valor_assento', 
-        'cd_voo',
     ];
 
-    public function voo()
+    public function tipoClasse()
     {
-        return $this->belongsTo(Voo::class, 'cd_voo', 'cd_voo');
+        return $this->belongsTo(TipoClasse::class, 'cd_tipo_classe', 'cd_tipo_classes');
+    }
+
+    public function vooClasse()
+    {
+        return $this->hasMany(VooClasse::class, 'cd_classe', 'cd_classe');
     }
 }

@@ -43,9 +43,9 @@ class Voo extends Model
         return $this->belongsTo(Aeroporto::class, 'cd_aeroporto_destino', 'cd_aeroporto');
     }
 
-    public function classes()
+    public function vooClasse()
     {
-        return $this->hasMany(Classe::class, 'cd_voo', 'cd_voo');
+        return $this->hasMany(VooClasse::class, 'cd_voo', 'cd_voo');
     }
 
     public function scopeComNumero($query, $filtro)
